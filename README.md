@@ -42,7 +42,7 @@ Currently VoiceMachine supports `actions-on-google` but it might be expanded in 
 
     // register it with the sdk
     const app = actionssdk({ debug: false });
-    VoiceMachineForActionsSDK(app, flow);
+    VoiceMachineForActionsSDK(app, flow, { debug: true });
 
     // register it with whatever framework you're using (for example: Serverless + Express)
     module.exports = express().use("/webhook", bodyParser.json(), app);
