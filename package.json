@@ -1,0 +1,25 @@
+{
+  "name": "voicemachine",
+  "version": "0.5.0",
+  "description": "An advanced state machine for building applications for Google Assistant.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Tim Broddin",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "peerDependencies": {
+    "actions-on-google": "*"
+  }
+}
