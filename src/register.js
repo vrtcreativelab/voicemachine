@@ -1,7 +1,7 @@
 const VoiceMachine = require("./VoiceMachine");
 
 const actionsSDK = (app, flow, options) => {
-  const debug = options && options.debug ? option.debug : false;
+  const debug = options && options.debug ? options.debug : false;
 
   app.intent("actions.intent.MAIN", async conv => {
     debug
