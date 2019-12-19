@@ -51,8 +51,16 @@ class VoiceMachine {
   }
 
   get() {
-    this.debug(`Current state = ${this.currentState}`);
-    return this.findState(this.currentState);
+    this.debug(`Current state = ${this.currentState}.`);
+    const state = this.findState(this.currentState);
+    if (!state) {
+      throw new Error(
+        `${this.currentState} not found! Available states: ${this.states
+          .map(s => s.id)
+          .join(", ")}`
+      );
+    }
+    return state;
   }
 
   set(id) {
@@ -120,6 +128,8 @@ class VoiceMachine {
         return target[prop];
       }
     });
+
+    this.debug(`Running ${step.id}`);
 
     const { next, output, skipListen } = await step.action({
       machine: this,
