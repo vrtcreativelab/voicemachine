@@ -1,6 +1,6 @@
 {
   "name": "voicemachine",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "An advanced state machine for building applications for Google Assistant.",
   "main": "dist/index.js",
   "scripts": {
@@ -32,5 +32,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/TimBroddin/voicemachine"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
