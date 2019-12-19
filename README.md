@@ -90,9 +90,9 @@ To pass data between different states in the same request (when you're not outpu
 
 ## Todo
 
-- [] Integration adapters for Redis, ... (memory)
-- [] Integrate with other services like Alexa
-- [] Explore xstate and its fancy diagrams
-- [] Add examples
+- [ ] Integration adapters for Redis, ... (memory)
+- [ ] Integrate with other services like Alexa
+- [ ] Explore xstate and its fancy diagrams
+- [ ] Add examples
 
 This project is bound to change a lot. Make sure to pin a version if you use it.
