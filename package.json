@@ -4,6 +4,7 @@
   "description": "An advanced state machine for building applications for Google Assistant.",
   "main": "dist/index.js",
   "scripts": {
+    "prepublishOnly": "npm build",
     "build": "webpack"
   },
   "author": "Tim Broddin",
@@ -21,5 +22,9 @@
   },
   "peerDependencies": {
     "actions-on-google": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TimBroddin/voicemachine"
   }
 }
