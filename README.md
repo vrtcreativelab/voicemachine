@@ -1,4 +1,4 @@
-## VoiceMachine, a state machine voor voice
+## VoiceMachine, a state machine for voice
 
 VoiceMachine is an advanced state machine for building applications for Google Assistant.
 
