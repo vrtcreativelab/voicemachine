@@ -12,53 +12,59 @@ Currently VoiceMachine supports `actions-on-google` but it might be expanded in 
 
 ## Installation
 
-    yarn add actions-on-google
-    yarn add voicemachine
+```
+yarn add actions-on-google
+yarn add voicemachine
+```
 
 `actions-on-google` is a peerDependency, so make sure to install it yourself!
 
 ## Setup
 
-    // Require the actions-on-google connector
-    const { actionsdk } = require("actions-on-google");
-    const { VoiceMachineForActionsSDK } = require("voicemachine");
+```js
+// Require the actions-on-google connector
+const { actionsdk } = require("actions-on-google");
+const { VoiceMachineForActionsSDK } = require("voicemachine");
 
-    // Write your machine
-    const flow = machine => {
-        machine.register("intro", ({ machine, conv, input }) => {
-            conv.ask("This is a simple demonstration. Say anything to continue");
+// Write your machine
+const flow = machine => {
+    machine.register("intro", ({ machine, conv, input }) => {
+        conv.ask("This is a simple demonstration. Say anything to continue");
 
-            return {
-                next: "step_2"
-            };
-        });
-
-        machine.register("step_2", ({ machine, conv, input }) => {
-            conv.ask("Ok, anything else?");
-
-            return {
-                next: "bye"
-            };
-        });
-
-        machine.register("bye", ({ machine, conv, input }) => {
-            conv.end("Bye!");
-        });
+        return {
+            next: "step_2"
+        };
     });
 
-    // register it with the sdk
-    const app = actionssdk({ debug: false });
-    VoiceMachineForActionsSDK(app, flow, { debug: true });
+    machine.register("step_2", ({ machine, conv, input }) => {
+        conv.ask("Ok, anything else?");
 
-    // register it with whatever framework you're using (for example: Serverless + Express)
-    module.exports = express().use("/webhook", bodyParser.json(), app);
+        return {
+            next: "bye"
+        };
+    });
+
+    machine.register("bye", ({ machine, conv, input }) => {
+        conv.end("Bye!");
+    });
+});
+
+// register it with the sdk
+const app = actionssdk({ debug: false });
+VoiceMachineForActionsSDK(app, flow, { debug: true });
+
+// register it with whatever framework you're using (for example: Serverless + Express)
+module.exports = express().use("/webhook", bodyParser.json(), app);
+```
 
 Don't forget to register your action with the [gactions CLI](https://developers.google.com/assistant/tools/gactions-cli).
 
 Alternatively you can create your own integration by instantiating the VoiceMachine yourself:
 
-    const machine = new VoiceMachine(flow, options);
-    await machine.run(conv);
+```js
+const machine = new VoiceMachine(flow, options);
+await machine.run(conv);
+```
 
 # Explanation
 
@@ -75,12 +81,14 @@ Each registered step's action is passed an object with these dependencies when c
 
 The options object can contain these keys for now:
 
-        {
-            visualizer: {
-                input: ["yes", "no"],
-                label: "A nice label for the GraphViz node"
-            }
-        }
+```js
+{
+    visualizer: {
+        input: ["yes", "no"],
+        label: "A nice label for the GraphViz node"
+    }
+}
+```
 
 Input are all input strings that are tried in order to draw a graph (see [Visualizer](#Visualizer)).
 
@@ -109,21 +117,25 @@ To pass data between different states in the same request (when you're not outpu
 
 Since version 0.6 it's possible to output a .dot file, which you can feed to GraphViz in order to create a neat visualization. Use this code to do so:
 
-    const { VoiceMachineForActionsSDK, Visualizer } = require("voicemachine");
-    const flow = (machine) => {
-        // create your flow
-    }
-    const V = new Visualizer(flow);
-    V.createDotFile("./graph.dot).then(() => console.log("done"));
+```js
+const { VoiceMachineForActionsSDK, Visualizer } = require("voicemachine");
+const flow = (machine) => {
+    // create your flow
+}
+const V = new Visualizer(flow);
+V.createDotFile("./graph.dot).then(() => console.log("done"));
+```
 
 If you are branching somewhere based on input (e.g. yes/no) you can supply the different possible inputs in the options object of the state:
 
-        {
-            visualizer: {
-                input: ["yes", "no"],
-                label: "A nice label for the GraphViz node"
-            }
-        }
+```js
+{
+    visualizer: {
+        input: ["yes", "no"],
+        label: "A nice label for the GraphViz node"
+    }
+}
+```
 
 This will give you a .dot file which you can [convert](https://dreampuf.github.io/GraphvizOnline/) to a nice graph:
 
