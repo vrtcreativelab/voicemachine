@@ -58,7 +58,7 @@ Alternatively you can create your own integration by instantiating the VoiceMach
 
 A statemachine is a series of steps, and your program can only be in one state at a time. You create a VoiceMachine state machine by registering all your states in a setup function (see `flow => (machine) { ... }` in "Setup").
 
-A step is registered by calling: `machine.register(name, action)` with name being a unique string and action being a function.
+A step is registered by calling: `machine.register(name, action, options)` with name being a unique string, action being a function and an optional options object.
 
 Each registered step's action is passed an object with these dependencies when called:
 
@@ -66,6 +66,17 @@ Each registered step's action is passed an object with these dependencies when c
 - `input`: the voice input, lowercased for easier matching against expressions
 - `rawInput`: the voice input
 - `conv`: the `actions-on-google` conversation object
+
+The options object can contain these keys for now:
+
+        {
+            visualizer: {
+                input: ["yes", "no"],
+                label: "A nice label for the GraphViz node"
+            }
+        }
+
+Input are all input strings that are tried in order to draw a graph (see [Visualization](#Visualizer)).
 
 Each state must return an object with these keys
 
@@ -87,6 +98,30 @@ VoiceMachine also contains a mechanism to store values. These values get resent 
 To pass data between different states in the same request (when you're not outputting anything, or you use `skipListen`) you can use the `machine.cache` object to store things.
 
 **Usage:** `machine.cache.askAgain = true`
+
+##Visualizer
+
+Since version 0.6 it's possible to output a .dot file, which you can feed to GraphViz in order to create a neat vizualisation. Use this code to do so:
+
+    const { VoiceMachineForActionsSDK, Visualizer } = require("voicemachine");
+    const flow = (machine) => {
+        // create your flow
+    }
+    const V = new Visualizer(flow);
+    V.createDotFile("./graph.dot).then(() => console.log("done"));
+
+If you are branching somewhere based on input (e.g. yes/no) you can supply the different possible inputs in the options object of the state:
+
+        {
+            visualizer: {
+                input: ["yes", "no"],
+                label: "A nice label for the GraphViz node"
+            }
+        }
+
+This will give you a nice flowchart:
+
+![alt text](example-graph.png "Example")
 
 ## Todo
 

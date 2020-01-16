@@ -21,9 +21,9 @@ class VoiceMachine {
     }
   }
 
-  register(id, action) {
+  register(id, action, options) {
     this.debug(`Registering ${id}`);
-    this.states.push({ id, action });
+    this.states.push({ id, action, options });
   }
 
   findState(id) {
@@ -191,7 +191,7 @@ class VoiceMachine {
     }
 
     this.debug(
-      "-------------------------- END RUN STATE ------------------------------"
+      "-------------------------- END RUN STATE (X) ------------------------------"
     );
   }
 }
