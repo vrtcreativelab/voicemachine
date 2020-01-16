@@ -34,43 +34,73 @@ class Visualizer {
         state.options.visualizer.label
       ) {
         labels[state.id] = state.options.visualizer.label;
-      } else {
-        labels[state.id] = state.id;
+        lines.push(`"${state.id}" [label=" ${labels[state.id]}"]`);
       }
     });
 
     await asyncForEach(this.states, async state => {
-      if (
-        state.options &&
-        state.options.visualizer &&
-        state.options.visualizer.input
-      ) {
-        await asyncForEach(state.options.visualizer.input, async input => {
+      const { options, action, id } = state;
+
+      if (options && options.visualizer && options.visualizer.memory) {
+        for (let p in state.options.visualizer.memory) {
+          asyncForEach(state.options.visualizer.memory[p], async memVal => {
+            this.machine.memory[p] = memVal;
+            if (options.visualizer.input) {
+              // Memory && input
+              await asyncForEach(options.visualizer.input, async input => {
+                try {
+                  const { next } = await action({
+                    conv: this.conv,
+                    machine: this.machine,
+                    input
+                  });
+                  lines.push(
+                    `  "${id}" -> "${next}"  [ label=" ${input} ${memVal}"]`
+                  );
+                } catch (e) {
+                  console.warn(`No next for ${id}`);
+                }
+              });
+            } else {
+              // only memory
+              try {
+                const { next } = await action({
+                  conv: this.conv,
+                  machine: this.machine,
+                  input: null
+                });
+                lines.push(`  "${id}" -> "${next}"  [ label=" ${memVal}"]`);
+              } catch (e) {
+                console.warn(`No next for ${id}`);
+              }
+            }
+          });
+        }
+      } else if (options && options.visualizer && options.visualizer.input) {
+        // only input
+        await asyncForEach(options.visualizer.input, async input => {
           try {
-            const { next } = await state.action({
+            const { next } = await action({
               conv: this.conv,
               machine: this.machine,
               input
             });
-            lines.push(
-              `  "${labels[state.id]}" -> "${
-                labels[next]
-              }"  [ label=" ${input}"]`
-            );
+            lines.push(`  "${id}" -> "${next}"  [ label=" ${input}"]`);
           } catch (e) {
-            console.warn(`No next for ${state.id}`);
+            console.warn(`No next for ${id}`);
           }
         });
       } else {
+        // nothing
         try {
-          const { next } = await state.action({
+          const { next } = await action({
             conv: this.conv,
             machine: this.machine,
             input: null
           });
-          lines.push(`  "${labels[state.id]}" -> "${labels[next]}"`);
+          lines.push(`  "${id}" -> "${next}"`);
         } catch (e) {
-          console.warn(`No next for ${state.id}`);
+          console.warn(`No next for ${id}`);
         }
       }
     });
