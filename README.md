@@ -119,7 +119,7 @@ If you are branching somewhere based on input (e.g. yes/no) you can supply the d
             }
         }
 
-This will give you a nice flowchart:
+This will give you a .dot file which you can [convert](https://dreampuf.github.io/GraphvizOnline/) to a nice graph:
 
 ![alt text](example-graph.png "Example")
 
