@@ -127,7 +127,7 @@ This will give you a .dot file which you can [convert](https://dreampuf.github.i
 
 - [ ] Integration adapters for Redis, ... (memory)
 - [ ] Integrate with other services like Alexa
-- [ ] Explore xstate and its fancy diagrams
+- [x] Explore xstate and its fancy diagrams
 - [ ] Add examples
 
 This project is bound to change a lot. Make sure to pin a version if you use it.
