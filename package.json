@@ -1,6 +1,6 @@
 {
   "name": "voicemachine",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "An advanced state machine for building applications for Google Assistant.",
   "main": "dist/index.js",
   "scripts": {

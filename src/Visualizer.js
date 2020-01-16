@@ -77,6 +77,7 @@ class Visualizer {
     lines.push("}");
 
     await writeFile(path, lines.join("\n"));
+    return;
   }
 }
 module.exports = { Visualizer };
