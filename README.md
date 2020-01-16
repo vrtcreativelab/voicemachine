@@ -4,6 +4,12 @@ VoiceMachine is an advanced state machine for building applications for Google A
 
 Currently VoiceMachine supports `actions-on-google` but it might be expanded in later releases if there's interest.
 
+## Changelog
+
+### 0.6
+
+- Added a Visualizer
+
 ## Installation
 
     yarn add actions-on-google
@@ -76,7 +82,7 @@ The options object can contain these keys for now:
             }
         }
 
-Input are all input strings that are tried in order to draw a graph (see [Visualization](#Visualizer)).
+Input are all input strings that are tried in order to draw a graph (see [Visualizer](#Visualizer)).
 
 Each state must return an object with these keys
 
@@ -99,7 +105,7 @@ To pass data between different states in the same request (when you're not outpu
 
 **Usage:** `machine.cache.askAgain = true`
 
-##Visualizer
+## Visualizer
 
 Since version 0.6 it's possible to output a .dot file, which you can feed to GraphViz in order to create a neat vizualisation. Use this code to do so:
 
