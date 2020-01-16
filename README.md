@@ -107,7 +107,7 @@ To pass data between different states in the same request (when you're not outpu
 
 ## Visualizer
 
-Since version 0.6 it's possible to output a .dot file, which you can feed to GraphViz in order to create a neat vizualisation. Use this code to do so:
+Since version 0.6 it's possible to output a .dot file, which you can feed to GraphViz in order to create a neat visualization. Use this code to do so:
 
     const { VoiceMachineForActionsSDK, Visualizer } = require("voicemachine");
     const flow = (machine) => {
