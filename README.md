@@ -10,6 +10,10 @@ Currently VoiceMachine supports `actions-on-google` but it might be expanded in 
 
 - Added a Visualizer
 
+### 0.6.4
+
+- Added `setStartState` which you can specify in your flow definition.
+
 ## Installation
 
 ```
@@ -47,6 +51,10 @@ const flow = machine => {
     machine.register("bye", ({ machine, conv, input }) => {
         conv.end("Bye!");
     });
+
+    // OPTIONAL: set start state. Usefull for debugging
+    machine.setStartState("intro");
+
 });
 
 // register it with the sdk

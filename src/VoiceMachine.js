@@ -12,13 +12,20 @@ class VoiceMachine {
     // flow
     this.states = [];
     registerStates(this);
-    this.currentState = this.states[0].id;
+    if (!this.currentState) {
+      this.currentState = this.states[0].id;
+    }
   }
 
   debug(obj) {
     if (this.debugEnabled) {
       console.log(obj);
     }
+  }
+
+  setStartState(state) {
+    this.debug(`Setting start state = ${state}`);
+    this.currentState = state;
   }
 
   register(id, action, options) {
@@ -130,13 +137,19 @@ class VoiceMachine {
     });
 
     this.debug(`Running ${step.id}`);
-
-    const { next, output, skipListen } = await step.action({
+    const actionResult = await step.action({
       machine: this,
       input: input.toLowerCase(),
       rawInput: input,
       conv: proxiedConv
     });
+
+    if (!actionResult) {
+      // no action result
+      conv.close();
+      return;
+    }
+    const { next, output, skipListen } = actionResult;
 
     // legacy output method
     if (output) {
