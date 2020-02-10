@@ -131,7 +131,7 @@ const flow = (machine) => {
     // create your flow
 }
 const V = new Visualizer(flow);
-V.createDotFile("./graph.dot).then(() => console.log("done"));
+V.createDotFile("./graph.dot").then(() => console.log("done"));
 ```
 
 If you are branching somewhere based on input (e.g. yes/no) you can supply the different possible inputs in the options object of the state:
