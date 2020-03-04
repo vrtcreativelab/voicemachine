@@ -131,9 +131,9 @@ Since version 0.6 it's possible to output a .dot file, which you can feed to Gra
 
 ```js
 const { VoiceMachineForActionsSDK, Visualizer } = require("voicemachine");
-const flow = (machine) => {
-    // create your flow
-}
+const flow = machine => {
+  // create your flow
+};
 const V = new Visualizer(flow);
 V.createDotFile("./graph.dot").then(() => console.log("done"));
 ```
@@ -196,13 +196,17 @@ module.exports = flow;
 
 ### SoundManager API
 
-| Method  
-| -------------------------------| -------------------------------------------------------------------------------------------------------------------- |
-| `constructor(url)` | Pass the base URL (where your sounds are) |
-| `addSound(soundFile, alt)` | Add a sound to the playback queue. Alt text is a fallback (and is also displayed on screen) |
-| `addPause(ms=500)` | Add a pause to the playback queue (default: 500ms) |
-| `flush(conv, end=false)` | Plays back the queue. If you pass end=true the conversation is closed |
-|
+`constructor(url)`
+Pass the base URL (where your sounds are)
+
+`addSound(soundFile, alt)`
+Add a sound to the playback queue. Alt text is a fallback (and is also displayed on screen)
+
+`addPause(ms=500)`
+Add a pause to the playback queue (default: 500ms)
+
+`flush(conv, end=false)`
+Plays back the queue. If you pass end=true the conversation is closed
 
 ## Todo
 
