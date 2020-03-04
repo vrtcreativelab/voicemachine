@@ -6,6 +6,10 @@ Currently VoiceMachine supports `actions-on-google` but it might be expanded in 
 
 ## Changelog
 
+### 0.7
+
+- Added SoundManager, a helper to construct responses consisting of multiple audio files.
+
 ### 0.6
 
 - Added a Visualizer
@@ -148,6 +152,57 @@ If you are branching somewhere based on input (e.g. yes/no) you can supply the d
 This will give you a .dot file which you can [convert](https://dreampuf.github.io/GraphvizOnline/) to a nice graph:
 
 ![alt text](example-graph.png "Example")
+
+## SoundManager
+
+SoundManager allows you to construct responses containing multiple audio files. For example, if you have three clips:
+
+- "The answer is carrot cake" - carrotcake.ogg
+- "You answered correctly. You get 10 points" - correct.ogg
+- "Your answer was incorrect." - incorrect.ogg
+
+You can do as follows:
+
+```js
+const { SoundManager } = require("voicemachine");
+
+const SM = new SoundManager("https://your-cdn.com/");
+
+const flow = machine => {
+  machine.register("ask", ({ conv }) => {
+    SM.addSound("question.ogg", "What's the best cake in the world?");
+    SM.flush(conv);
+    return {
+      next: "check_answer"
+    };
+  });
+
+  machine.register("check_answer", ({ conv, input }) => {
+    SM.addSound("carrorcake.ogg", "The answer is carrot cake.");
+    SM.addPause(100);
+    if (input.toLowerCase() === "carrot caker") {
+      SM.addSound("correct.ogg", "You answered correctly. You get 10 points.");
+    } else {
+      SM.addSound("incorrect.ogg", "Your answer was incorrect.");
+    }
+
+    SM.flush(conv, true);
+    return {};
+  });
+};
+
+module.exports = flow;
+```
+
+### SoundManager API
+
+| Method  
+| -------------------------------| -------------------------------------------------------------------------------------------------------------------- |
+| `constructor(url)` | Pass the base URL (where your sounds are) |
+| `addSound(soundFile, alt)` | Add a sound to the playback queue. Alt text is a fallback (and is also displayed on screen) |
+| `addPause(ms=500)` | Add a pause to the playback queue (default: 500ms) |
+| `flush(conv, end=false)` | Plays back the queue. If you pass end=true the conversation is closed |
+|
 
 ## Todo
 

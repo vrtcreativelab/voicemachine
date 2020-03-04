@@ -108,6 +108,17 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 
 /***/ }),
 
+/***/ "./src/SoundManager.js":
+/*!*****************************!*\
+  !*** ./src/SoundManager.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("class SoundManager {\n  constructor(baseUrl) {\n    this.baseUrl = baseUrl;\n    this.buffer = [];\n  }\n\n  addSound(src, txt) {\n    this.buffer.push(`<audio src=\"${this.baseUrl}/${encodeURIComponent(src)}\">\n        ${txt}\n      </audio>`);\n  }\n\n  addPause(ms = 500) {\n    this.buffer.push(`<break time=\"${ms}ms\" />`);\n  }\n\n  addEarcon() {\n    this.buffer.push(`<audio src=\"${this.baseUrl}/earcon.ogg\">\n        &lt;earcon&gt;\n      </audio>`);\n  }\n\n  flush(conv, end = false) {\n    if (end) {\n      conv.close(`<speak>${this.buffer.join(\"\\n\")}</speak>`);\n    } else {\n      conv.ask(`<speak>${this.buffer.join(\"\\n\")}</speak>`);\n    }\n\n    this.buffer = [];\n  }\n\n}\n\nmodule.exports.SoundManager = SoundManager;\n\n//# sourceURL=webpack:///./src/SoundManager.js?");
+
+/***/ }),
+
 /***/ "./src/Visualizer.js":
 /*!***************************!*\
   !*** ./src/Visualizer.js ***!
@@ -137,7 +148,7 @@ eval("const {\n  find\n} = __webpack_require__(/*! lodash */ \"./node_modules/lo
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("/* eslint-disable require-atomic-updates */\nconst {\n  actionsSDK\n} = __webpack_require__(/*! ./register */ \"./src/register.js\");\n\nconst {\n  VoiceMachine\n} = __webpack_require__(/*! ./VoiceMachine */ \"./src/VoiceMachine.js\");\n\nconst {\n  Visualizer\n} = __webpack_require__(/*! ./Visualizer */ \"./src/Visualizer.js\");\n\nmodule.exports = {\n  VoiceMachine,\n  VoiceMachineForActionsSDK: actionsSDK,\n  Visualizer\n};\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("/* eslint-disable require-atomic-updates */\nconst {\n  actionsSDK\n} = __webpack_require__(/*! ./register */ \"./src/register.js\");\n\nconst {\n  VoiceMachine\n} = __webpack_require__(/*! ./VoiceMachine */ \"./src/VoiceMachine.js\");\n\nconst {\n  Visualizer\n} = __webpack_require__(/*! ./Visualizer */ \"./src/Visualizer.js\");\n\nconst {\n  SoundManager\n} = __webpack_require__(/*! ./SoundManager */ \"./src/SoundManager.js\");\n\nmodule.exports = {\n  VoiceMachine,\n  VoiceMachineForActionsSDK: actionsSDK,\n  Visualizer,\n  SoundManager\n};\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
